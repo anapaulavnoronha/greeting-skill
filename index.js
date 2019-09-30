@@ -7,3 +7,25 @@ exports.handler = function(event, context) {
   } else {
   }
 };
+
+function buildResponse(options) {
+  var response = {
+    version: "1.0",
+    response: {
+      outputSpeech: {
+        type: "PlainText",
+        text: options.speechText
+      },
+      shouldEndSession: options.endSession
+    }
+  };
+
+  if (response.repromptText) {
+    response.response.reprompt = {
+      outputSpeech: {
+        type: "PlainText",
+        text: options.repromptText
+      }
+    };
+  }
+}
