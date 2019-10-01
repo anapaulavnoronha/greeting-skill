@@ -1,27 +1,31 @@
 exports.handler = function(event, context) {
-  var request = event.request;
+  try {
+    var request = event.request;
 
-  if (request.type === "LaunchRequest") {
-    let options = {};
-    options.speechText =
-      "Welcome to greeting skill. Using our skill you can greet your guests. Whom you want to greet?";
-    options.reprompt = "You can say for example, say hello to John";
-    options.endSession = false;
-    context.succeed(buildResponse(options));
-  } else if (request.type === "IntentRequest") {
-    let options = {};
-    if (request.intent.name === "HelloIntent") {
-      let name = request.intent.slots.FirstName.value;
-      options.speechText = "Hello " + name + ". ";
-      options.speechText += getWish();
-      options.reprompt = "";
-      options.endSession = true;
+    if (request.type === "LaunchRequest") {
+      let options = {};
+      options.speechText =
+        "Welcome to greeting skill. Using our skill you can greet your guests. Whom you want to greet?";
+      options.reprompt = "You can say for example, say hello to John";
+      options.endSession = false;
       context.succeed(buildResponse(options));
+    } else if (request.type === "IntentRequest") {
+      let options = {};
+      if (request.intent.name === "HelloIntent") {
+        let name = request.intent.slots.FirstName.value;
+        options.speechText = "Hello " + name + ". ";
+        options.speechText += getWish();
+        options.reprompt = "";
+        options.endSession = true;
+        context.succeed(buildResponse(options));
+      } else {
+        context.fail("Unknow Intent");
+      }
+    } else if (request.type === "SessionEndedRequest") {
     } else {
-      context.fail("Unknow Intent");
     }
-  } else if (request.type === "SessionEndedRequest") {
-  } else {
+  } catch (e) {
+    context.fail("Execption: " + e);
   }
 };
 
