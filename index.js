@@ -19,10 +19,11 @@ exports.handler = function(event, context) {
         options.endSession = true;
         context.succeed(buildResponse(options));
       } else {
-        context.fail("Unknow Intent");
+        throw "Unknow Intent";
       }
     } else if (request.type === "SessionEndedRequest") {
     } else {
+      throw "Unknow Intent Type";
     }
   } catch (e) {
     context.fail("Execption: " + e);
