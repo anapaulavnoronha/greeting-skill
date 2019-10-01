@@ -9,10 +9,25 @@ exports.handler = function(event, context) {
     options.endSession = false;
     context.succeed(buildResponse(options));
   } else if (request.type === "IntentRequest") {
+    let options = {};
+    if (request.intent.name === "HelloIntent") {
+      let name = request.intent.slots.FirstName.value;
+      options.speechText = "Hello " + name + ". ";
+      options.speechText += getWish();
+      options.reprompt = "";
+      options.endSession = false;
+      context.succeed(buildResponse(options));
+    } else {
+      context.fail("Unknow Intent");
+    }
   } else if (request.type === "SessionEndedRequest") {
   } else {
   }
 };
+
+function getWhish() {
+  var myTime = new Data();
+}
 
 function buildResponse(options) {
   var response = {
