@@ -15,7 +15,7 @@ exports.handler = function(event, context) {
       options.speechText = "Hello " + name + ". ";
       options.speechText += getWish();
       options.reprompt = "";
-      options.endSession = false;
+      options.endSession = true;
       context.succeed(buildResponse(options));
     } else {
       context.fail("Unknow Intent");
