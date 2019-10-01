@@ -26,7 +26,20 @@ exports.handler = function(event, context) {
 };
 
 function getWhish() {
-  var myTime = new Data();
+  var myDate = new Data();
+  var hours = myDate.getUTCHours() - 8;
+
+  if (hours < 0) {
+    hours = hours + 24;
+  }
+
+  if (hours < 12) {
+    hours = "Good Morning. ";
+  } else if (hours < 18) {
+    hours = "Good Afternoon. ";
+  } else {
+    hours = "Good Evening. ";
+  }
 }
 
 function buildResponse(options) {
